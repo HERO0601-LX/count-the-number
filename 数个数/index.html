@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>数个数 - 1v1对战</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="gameCanvas"></canvas>
+    
+    <div class="ui-layer">
+      <!-- Header Scores -->
+      <div class="header">
+        <div class="player-score p1-score">
+          P1 (Q) <span id="playerCountP1" class="score-value">0</span>
+        </div>
+        <div class="level-info"><span id="currentLevel">有几个小猫？</span></div>
+        <div class="player-score p2-score">
+          P2 (P) <span id="playerCountP2" class="score-value">0</span>
+        </div>
+      </div>
+
+      <!-- Center Message -->
+      <div id="centerMessage" class="center-message">准备开始</div>
+
+      <!-- Input Feedback -->
+      <div id="p1Input" class="input-feedback p1-input"></div>
+      <div id="p2Input" class="input-feedback p2-input"></div>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="menu" style="display: none;">
+      <h2>加载中...</h2>
+      <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div id="mainMenu" class="menu">
+      <h1>数个数</h1>
+      <div class="btn-group">
+        <button class="btn" onclick="startGame('easy')">简单模式</button>
+        <button class="btn" onclick="startGame('standard')">标准模式</button>
+        <button class="btn" onclick="startGame('hard')">地狱模式</button>
+        <button class="btn" onclick="showGameInstructions()">游戏说明</button>
+        <button class="btn" style="opacity: 0.5; cursor: not-allowed;">网络对战 (开发中)</button>
+      </div>
+    </div>
+
+    <!-- Game Instructions Modal -->
+    <div id="gameInstructions" class="menu hidden">
+      <h1>游戏说明</h1>
+      <div class="instructions-content">
+        <h2>游戏玩法</h2>
+        <p>1. 游戏目标：在限定时间内数清楚屏幕上出现的小猫数量。</p>
+        <p>2. 玩家操作：</p>
+        <ul>
+          <li>玩家1：使用 Q 键计数，Z 键结束计数</li>
+          <li>玩家2：使用 P 键计数，M 键结束计数</li>
+        </ul>
+        <p>3. 游戏规则：</p>
+        <ul>
+          <li>每轮游戏开始前会有3秒倒计时</li>
+          <li>屏幕上会出现小猫和干扰元素（不计入数量）</li>
+          <li>数对数量显示绿色对勾，数错显示红色叉</li>
+          <li>每关结束后立即进入下一关</li>
+          <li>10关结束后，根据总用时和失误次数计算最终时间</li>
+        </ul>
+        <h2>难度模式</h2>
+        <p><strong>简单模式</strong>：所有关卡图片固定不动</p>
+        <p><strong>标准模式</strong>：前5关固定，第6-10关图片缓慢移动</p>
+        <p><strong>地狱模式</strong>：
+          <ul>
+            <li>第1-3关：图片缓慢移动</li>
+            <li>第4-6关：图片正常移动</li>
+            <li>第7-10关：图片快速移动</li>
+          </ul>
+        </p>
+        <h2>干扰元素</h2>
+        <p>每关会出现2-4个干扰元素，它们不计入目标数量，仅用于干扰玩家数数。</p>
+      </div>
+      <div class="btn-group">
+        <button class="btn" onclick="hideGameInstructions()">返回主菜单</button>
+      </div>
+    </div>
+
+    <!-- Game Over Menu -->
+    <div id="gameOverMenu" class="menu hidden">
+      <h1>游戏结束</h1>
+      <h2 id="winnerDisplay" style="margin-bottom: 30px; font-size: 32px;">平局!</h2>
+      <div class="btn-group">
+        <button class="btn" onclick="showMainMenu()">返回主菜单</button>
+        <button class="btn" onclick="restartGame()">再来一局</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
